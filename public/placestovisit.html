@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Places to Visit</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+      }
+      .place-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 600px;
+      }
+      .place-card h3 {
+        margin-top: 0;
+        color: #34495e;
+      }
+      .place-card p {
+        margin: 5px 0;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Explore Places to Visit</h1>
+    <div id="places">
+      <script>
+        fetch("/api/placeeestoooviiisiiit")
+          .then((response) => response.json())
+          .then((data) => {
+            const container = document.getElementById("places");
+            data.forEach((place) => {
+              const card = document.createElement("div");
+              card.className = "place-card";
+              card.innerHTML = `
+          <h3>${place.name}</h3>
+          <p><strong>Description:</strong> ${place.description}</p>
+          <p><strong>Location:</strong> ${place.location}</p>
+          <p><strong>Category:</strong> ${place.category}</p>
+          <p><strong>Rating:</strong> ${place.rating}</p>
+        `;
+              container.appendChild(card);
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching places:", error);
+            document.getElementById("places").innerHTML ="<p>Failed to load places.</p>";
+          });
+      </script>
+    </div>
+  </body>
+</html>
